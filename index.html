@@ -28,7 +28,7 @@
       border-radius: 8px;
       cursor: pointer;
       margin: 10px;
-      position: absolute; /* So the No button can move */
+      position: absolute;
     }
     #yesBtn {
       background-color: #ff66b2;
@@ -54,55 +54,57 @@
   <p id="message"></p>
 
   <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const message = document.getElementById("message");
+    document.addEventListener("DOMContentLoaded", () => {
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+      const message = document.getElementById("message");
 
-    const noMessages = [
-      "Please? 🥺",
-      "Are you sure? 😢",
-      "I'm going to be sad 😭",
-      "Think again 😏",
-      "You can’t escape 💕",
-    ];
-    let noCount = 0;
+      const noMessages = [
+        "Please? 🥺",
+        "Are you sure? 😢",
+        "I'm going to be sad 😭",
+        "Think again 😏",
+        "You can’t escape 💕",
+      ];
+      let noCount = 0;
 
-    // Center Yes button at first
-    yesBtn.style.left = "40%";
-    yesBtn.style.top = "50%";
+      // Center Yes button at first
+      yesBtn.style.left = "40%";
+      yesBtn.style.top = "50%";
 
-    // Place No button a bit to the right
-    noBtn.style.left = "55%";
-    noBtn.style.top = "50%";
+      // Place No button a bit to the right
+      noBtn.style.left = "55%";
+      noBtn.style.top = "50%";
 
-    yesBtn.addEventListener("click", () => {
-      message.textContent = "I love you, thanks! ❤️";
-      yesBtn.style.display = "none"; // Yes disappears
-    });
+      yesBtn.addEventListener("click", () => {
+        message.textContent = "I love you, thanks! ❤️";
+        yesBtn.style.display = "none";
+      });
 
-    // Works on both hover and touch (for mobile)
-    noBtn.addEventListener("mouseenter", moveNo);
-    noBtn.addEventListener("touchstart", moveNo);
+      noBtn.addEventListener("mouseenter", moveNo);
+      noBtn.addEventListener("touchstart", moveNo);
 
-    function moveNo() {
-      const winWidth = window.innerWidth;
-      const winHeight = window.innerHeight;
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
+      function moveNo() {
+        if (noCount < noMessages.length) {
+          const winWidth = window.innerWidth;
+          const winHeight = window.innerHeight;
+          const btnWidth = noBtn.offsetWidth;
+          const btnHeight = noBtn.offsetHeight;
 
-      const x = Math.random() * (winWidth - btnWidth);
-      const y = Math.random() * (winHeight - btnHeight - 50);
+          const x = Math.random() * (winWidth - btnWidth);
+          const y = Math.random() * (winHeight - btnHeight - 50);
 
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+          noBtn.style.left = `${x}px`;
+          noBtn.style.top = `${y}px`;
 
-      if (noCount < noMessages.length) {
-        message.textContent = noMessages[noCount];
-        noCount++;
-      } else {
-        message.textContent = "Now you have no choice 😘";
+          message.textContent = noMessages[noCount];
+          noCount++;
+        } else {
+          message.textContent = "Now you have no choice 😘";
+          noBtn.style.display = "none"; // Hide No button
+        }
       }
-    }
+    });
   </script>
 </body>
 </html>
